@@ -7,12 +7,15 @@ function start(){
 
 function appendStart(){
     var $userInput = $('<div class="inputs"></div>');
+    $userInput.append('<label for="num1">First Number: </label><br>');
     $userInput.append('<input type="number" id="num1"><br>');
+    $userInput.append('<label for="num2">Second Number: </label><br>');
     $userInput.append('<input type="number" id="num2"><br>');
     $userInput.append('<button class="operator" id="add">ADD</button>');
     $userInput.append('<button class="operator" id="subtract">SUBTRACT</button>');
     $userInput.append('<button class="operator" id="multiply">MULTIPLY</button>');
     $userInput.append('<button class="operator" id="divide">DIVIDE</button>');
+    $userInput.append('<h2>RESULT: <span id="result"></span></h2>');
     $userInput.append('<button id="clear">CLEAR</button>');
     $('.container').append($userInput);
 }
