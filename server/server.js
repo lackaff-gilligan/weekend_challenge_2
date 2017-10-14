@@ -1,7 +1,10 @@
 var express = require('express');
 var app = express();
 var port = 5000;
+
+//will store the calculated result
 var calculation;
+
 //express static file serving
 app.use(express.static('server/public'));
 
@@ -16,11 +19,10 @@ app.post('/calculate', function(req, res){
   console.log('req.body:', req.body); //will be mathParts
   var mathBundle = req.body;
   calculation = performCalculation(mathBundle);
- 
   res.sendStatus(201);
 });
 
-
+// determine and then perform appropriate calculation
 function performCalculation(obj){
   var answer; 
   if(obj.type === 'add'){ 
@@ -36,10 +38,11 @@ function performCalculation(obj){
     answer = parseInt(obj.first) / parseInt(obj.second);
     console.log('answer if "divide":', answer);
   }
+  //TODO round the answer to fixed decimal place
   return answer;
 }
 
-//GET route
+//GET route '/calculate'
 app.get('/calculate', function(req, res){
   res.send({finalAns: calculation});
 })
