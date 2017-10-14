@@ -2,7 +2,7 @@ $(document).ready(start);
 
 function start(){
     appendStart();
-    $('.operator').on('click', determineOperation);
+    $('.operator').on('click', sendOperation);
 }
 
 function appendStart(){
@@ -17,9 +17,26 @@ function appendStart(){
     $('.container').append($userInput);
 }
 
-function determineOperation(){
+function sendOperation(){
    var operator = $(this).attr('id');
    console.log(operator);
-   
+   // object will be data in POST request
+   var mathOperation = {
+       x: $('#num1').val(),
+       y: $('#num2').val(),
+       type: operator
+   }
+   console.log('mathOperation:', mathOperation);
+   // make POST request
+   $.ajax({
+       method: 'POST',
+       url: '/calculate',
+       data: mathOperation
+   }).done(function(response){
+       console.log(response);
+    //get req function will be called here
+   }).fail(function(message){
+       console.log('Error', message);
+   })
 }
 
