@@ -38,8 +38,8 @@ function performCalculation(obj){
     answer = parseInt(obj.first) / parseInt(obj.second);
     console.log('answer if "divide":', answer);
   }
-  //TODO round the answer to fixed decimal place
-  return answer;
+  //round answer to fixed decimal place
+  return answer.toFixed(2);
 }
 
 //GET route '/calculate'
