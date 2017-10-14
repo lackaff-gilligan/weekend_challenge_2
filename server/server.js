@@ -23,6 +23,11 @@ app.post('/calculate', function(req, res){
   res.sendStatus(201);
 });
 
+//GET route
+app.get('/calculate', function(req, res){
+  res.send(calculationStorage);
+})
+
 // start up the server
 app.listen(port, function(){
     console.log('listening on port', port);
