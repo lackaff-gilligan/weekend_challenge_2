@@ -18,22 +18,23 @@ function appendStart(){
 }
 
 function sendOperation(){
-   var operator = $(this).attr('id');
-   console.log(operator);
+   //store the id name in a variable
+    var operator = $(this).attr('id');
+   console.log('var operator:', operator);
    // object will be data in POST request
-   var mathOperation = {
+   var mathParts = {
        x: $('#num1').val(),
        y: $('#num2').val(),
        type: operator
    }
-   console.log('mathOperation:', mathOperation);
+   console.log('mathParts object:', mathParts);
    // make POST request
    $.ajax({
        method: 'POST',
        url: '/calculate',
-       data: mathOperation
+       data: mathParts
    }).done(function(response){
-       console.log(response);
+       console.log('response sent from server:', response);
     //get req function will be called here
    }).fail(function(message){
        console.log('Error', message);
