@@ -2,15 +2,15 @@ $(document).ready(start);
 
 function start(){
     appendNumberBtns();
-   
+    
     //click handlers
     $('#numBtns').on('click','button', useNumber);
     $('.operator').on('click', useOperator);
     $('#equals').on('click', sendCalculation);
+    $('#clear').on('click', reset);
 }
-//will store all components of the calculation
-//var mathNumbers = [];
-var stringProblem = '';
+
+//will store the operator in a string
 var myOperator;
 
 //append number buttons to DOM
@@ -24,8 +24,6 @@ function appendNumberBtns() {
 function useNumber(){
     $('#display').append($(this).text());
     console.log($('#display').text());
-    //mathNumbers.push($(this).text());  
-    stringProblem += $(this).text(); 
 }
 
 //display and store the operator to be used in calculation
@@ -42,16 +40,11 @@ function useOperator(){
         myOperator = '/';
     }
     $('#display').append(" " + myOperator + " ");
-    stringProblem += myOperator;
 }
 
 function sendCalculation(){
-    // var mathBundle = {
-    //     first: mathNumbers[0],
-    //     second: mathNumbers[1],
-    //     operator: myOperator
-    // }
-    // console.log('mathBundle object:', mathBundle);
+    var stringProblem = $('#display').text();
+    //put the string of math in an object
     var solveThis = {
         problem: stringProblem
     }
@@ -82,34 +75,9 @@ function getAnswer(){
 function addAnswerToDOM(objReturned){
     var currentAns = objReturned.return;
     $('#answer').append(currentAns);
-
 }
 
-//     //add event handlers
-//     $('.operator').on('click', sendOperation);
-//     $('#clear').on('click', restart);
-// }
-
-// empty .container and then re-appendBaseStart() to the DOM
-// function restart(){
-//     $('.container').empty();
-//     appendBaseStart();
-
-// }
-
-// function getResult(){
-//     // make GET request
-//   $.ajax({
-//       method: 'GET',
-//       url: '/calculate'
-//   }).done(function(response){
-//       var calculatedResult = response;
-
-//       appendResult(calculatedResult.finalAns);
-//   })
-// }
-
-// // display the result on the DOM
-// function appendResult(myResult) {
-//  $('#result').text(myResult);
-// }
+function reset(){
+    $('#display').text('');
+    $('#answer').text('');
+}

@@ -5,6 +5,7 @@ var port = 5000;
 var history = []
 //will be the current calculation's answer
 var answer;
+// bring in doCalculation.js module
 var calculateThis = require('./modules/doCalculation.js');
 
 
@@ -15,17 +16,20 @@ app.use(express.static('server/public'));
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
-//maybe will need to store something here?
 
 //POST route
 app.post('/calculate', function(req, res){
+  //reset answer to 0
+  answer = 0;
   console.log('req.body:', req.body);
   var strMathObj = req.body;
   //just the string of math 
   var strOfMath = strMathObj.problem;
-  //store the string math
-  history.push(strOfMath);
   console.log('strOfMath:', strOfMath);
+  //store the string of math
+  history.push(strOfMath);
+  console.log(history);
+  //use the function from doCalculation.js module
   answer = calculateThis(strOfMath);
   console.log('answer:', answer);
  
@@ -36,42 +40,6 @@ app.post('/calculate', function(req, res){
 app.get('/calculate', function(req, res){
   res.send({return: answer});
 })
-
-
-
-
-// //POST route '/calculate'
-// app.post('/calculate', function(req, res){
-//   console.log('req.body:', req.body); //will be mathParts
-//   var mathBundle = req.body;
-//   calculation = performCalculation(mathBundle);
-//   res.sendStatus(201);
-// });
-
-// // determine and then perform appropriate calculation
-// function performCalculation(obj){
-//   var answer; 
-//   if(obj.type === 'add'){ 
-//   answer = parseInt(obj.first) + parseInt(obj.second);
-//   console.log('answer if "add":', answer);
-//   } else if(obj.type === 'subtract'){
-//     answer = parseInt(obj.first) - parseInt(obj.second);
-//     console.log('answer if "subtract":', answer);
-//   } else if(obj.type === 'multiply'){
-//     answer = parseInt(obj.first) * parseInt(obj.second);
-//     console.log('answer if "multiply":', answer);
-//   } else if(obj.type === 'divide'){
-//     answer = parseInt(obj.first) / parseInt(obj.second);
-//     console.log('answer if "divide":', answer);
-//   }
-//   //round answer to fixed decimal place
-//   return answer.toFixed(2);
-// }
-
-// //GET route '/calculate'
-// app.get('/calculate', function(req, res){
-//   res.send({finalAns: calculation});
-// })
 
 // start up the server
 app.listen(port, function(){
