@@ -32,11 +32,6 @@ app.post('/calculate', function(req, res){
   res.sendStatus(201);
 });
 
- //put the answer in an object 
-//  var ansInObj = {
-//   result: answer
-// }
-
 //GET route
 app.get('/calculate', function(req, res){
   res.send({return: answer});

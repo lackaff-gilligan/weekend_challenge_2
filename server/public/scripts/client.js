@@ -62,10 +62,27 @@ function sendCalculation(){
         data: solveThis
     }).done(function(response){
         console.log('response sent from server:', response);
-        //will add function that makes GET req
+        //call function that makes GET req
+        getAnswer();
     }).fail(function(message){
         console.log('Error', message);
     })
+}
+
+function getAnswer(){
+    $.ajax({
+        method: 'GET',
+        url: '/calculate'
+    }).done(function(response){
+        console.log('success!');
+        addAnswerToDOM(response);
+    })
+}
+
+function addAnswerToDOM(objReturned){
+    var currentAns = objReturned.return;
+    $('#answer').append(currentAns);
+
 }
 
 //     //add event handlers
