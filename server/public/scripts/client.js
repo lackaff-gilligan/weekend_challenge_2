@@ -2,99 +2,92 @@ $(document).ready(start);
 
 function start(){
     appendNumberBtns();
-    appendOperatorBtns();
+   
+    //click handlers
+    $('#numBtns').on('click','button', useNumber);
+    $('.operator').on('click', useOperator);
+    $('#equals').on('click', sendCalculation);
 }
+//will store all components of the calculation
+var mathNumbers = [];
+var myOperator;
 
+//append number buttons to DOM
 function appendNumberBtns() {
   for(var i = 0; i < 10; i += 1){
       $('#numBtns').append('<button id="num' + i + '">' + i + '</button>');
   }
 }
 
-function appendOperatorBtns() {
-  $('#opBtns').append('<button class="operator" id="add">ADD</button>');
-  $('#opBtns').append('<button class="operator" id="subtract">SUBTRACT</button>');
-  $('#opBtns').append('<button class="operator" id="multiply">MULTIPLY</button>');
-  $('#opBtns').append('<button class="operator" id="divide">DIVIDE</button><br>');
-  $('#opBtns').append('<button class="operator" id="equals">EQUALS</button><br>');
-  $('#opBtns').append('<button id="clear">CLEAR</button>');
-}
-
-
-
-function addClickHandlers(){
-    $numBtns.on('click', 'button', useNumber);
-}
-
+//display and then store the number when its button is clicked
 function useNumber(){
     $('#display').append($(this).text());
+    console.log($('#display').text());
+    mathNumbers.push($(this).text());   
 }
 
-//create and append inputs and buttons to .container div
-// function appendBaseStart(){
-//     var $userInput = $('<div class="inputs"></div>');
-//     $userInput.append('<label for="num1">First Number: </label><br>');
-//     $userInput.append('<input type="number" id="num1"><br>');
-//     $userInput.append('<label for="num2">Second Number: </label><br>');
-//     $userInput.append('<input type="number" id="num2"><br>');
-//     $userInput.append('<button class="operator" id="add">ADD</button>');
-//     $userInput.append('<button class="operator" id="subtract">SUBTRACT</button>');
-//     $userInput.append('<button class="operator" id="multiply">MULTIPLY</button>');
-//     $userInput.append('<button class="operator" id="divide">DIVIDE</button>');
-//     $userInput.append('<h2>RESULT: <span id="result"></span></h2>');
-//     $userInput.append('<button id="clear">CLEAR</button>');
-//     $('.container').append($userInput);
+//display and store the operator to be used in calculation
+function useOperator(){
+    myOperator = $(this).attr('id');
+    console.log(myOperator);
+    if(myOperator === 'add'){
+        myOperator = '+';
+    } else if(myOperator === 'subtract'){
+        myOperator = '-';
+    } else if(myOperator === 'multiply'){
+        myOperator = '*';
+    } else if(myOperator === 'divide'){
+        myOperator = '/';
+    }
+    $('#display').append(" " + myOperator + " ");
+}
+
+function sendCalculation(){
+    var mathBundle = {
+        first: mathParts[0],
+        second: mathParts[1],
+        operator: myOperator
+    }
+    console.log('mathBundle object:', mathBundle);
+    
+    //make POST request
+    $.ajax({
+        method: 'POST',
+        url: '/calculate',
+        data: mathBundle
+    }).done(function(response){
+        console.log('response sent from server:', response);
+        //will add function that makes GET req
+    }).fail(function(message){
+        console.log('Error', message);
+    })
+}
+
 //     //add event handlers
 //     $('.operator').on('click', sendOperation);
 //     $('#clear').on('click', restart);
 // }
 
 // empty .container and then re-appendBaseStart() to the DOM
-function restart(){
-    $('.container').empty();
-    appendBaseStart();
+// function restart(){
+//     $('.container').empty();
+//     appendBaseStart();
 
-}
+// }
 
-function sendOperation(){
-   //store the id name in a variable
-    var operator = $(this).attr('id');
-   console.log('var operator:', operator);
-   // object that will be the data in POST request
-   var mathParts = {
-       first: $('#num1').val(),
-       second: $('#num2').val(),
-       type: operator
-   }
-   console.log('mathParts object:', mathParts);
-   
-   // make POST request
-   $.ajax({
-       method: 'POST',
-       url: '/calculate',
-       data: mathParts
-   }).done(function(response){
-       console.log('response sent from server:', response);
-    //once POST req is finished, call function that will make a GET req
-    getResult();
-   }).fail(function(message){
-       console.log('Error', message);
-   })
-}
+// function getResult(){
+//     // make GET request
+//   $.ajax({
+//       method: 'GET',
+//       url: '/calculate'
+//   }).done(function(response){
+//       var calculatedResult = response;
 
-function getResult(){
-    // make GET request
-  $.ajax({
-      method: 'GET',
-      url: '/calculate'
-  }).done(function(response){
-      var calculatedResult = response;
+//       appendResult(calculatedResult.finalAns);
+//   })
+// }
 
-      appendResult(calculatedResult.finalAns);
-  })
-}
-
-// display the result on the DOM
-function appendResult(myResult) {
- $('#result').text(myResult);
-}
+// // display the result on the DOM
+// function appendResult(myResult) {
+//  $('#result').text(myResult);
+// }
