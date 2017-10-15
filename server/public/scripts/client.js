@@ -44,8 +44,8 @@ function useOperator(){
 
 function sendCalculation(){
     var mathBundle = {
-        first: mathParts[0],
-        second: mathParts[1],
+        first: mathNumbers[0],
+        second: mathNumbers[1],
         operator: myOperator
     }
     console.log('mathBundle object:', mathBundle);
