@@ -9,7 +9,8 @@ function start(){
     $('#equals').on('click', sendCalculation);
 }
 //will store all components of the calculation
-var mathNumbers = [];
+//var mathNumbers = [];
+var stringProblem = '';
 var myOperator;
 
 //append number buttons to DOM
@@ -23,7 +24,8 @@ function appendNumberBtns() {
 function useNumber(){
     $('#display').append($(this).text());
     console.log($('#display').text());
-    mathNumbers.push($(this).text());   
+    //mathNumbers.push($(this).text());  
+    stringProblem += $(this).text(); 
 }
 
 //display and store the operator to be used in calculation
@@ -40,21 +42,24 @@ function useOperator(){
         myOperator = '/';
     }
     $('#display').append(" " + myOperator + " ");
+    stringProblem += myOperator;
 }
 
 function sendCalculation(){
-    var mathBundle = {
-        first: mathNumbers[0],
-        second: mathNumbers[1],
-        operator: myOperator
+    // var mathBundle = {
+    //     first: mathNumbers[0],
+    //     second: mathNumbers[1],
+    //     operator: myOperator
+    // }
+    // console.log('mathBundle object:', mathBundle);
+    var solveThis = {
+        problem: stringProblem
     }
-    console.log('mathBundle object:', mathBundle);
-    
     //make POST request
     $.ajax({
         method: 'POST',
         url: '/calculate',
-        data: mathBundle
+        data: solveThis
     }).done(function(response){
         console.log('response sent from server:', response);
         //will add function that makes GET req

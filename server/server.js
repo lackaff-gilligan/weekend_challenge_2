@@ -1,6 +1,12 @@
 var express = require('express');
 var app = express();
 var port = 5000;
+//stores the calculations in string form
+var history = []
+//will be the current calculation's answer
+var answer;
+var calculateThis = require('./modules/doCalculation.js');
+
 
 //express static file serving
 app.use(express.static('server/public'));
@@ -14,8 +20,26 @@ app.use(bodyParser.urlencoded({extended: true}));
 //POST route
 app.post('/calculate', function(req, res){
   console.log('req.body:', req.body);
-  var mathParts = req.body;
+  var strMathObj = req.body;
+  //just the string of math 
+  var strOfMath = strMathObj.problem;
+  //store the string math
+  history.push(strOfMath);
+  console.log('strOfMath:', strOfMath);
+  answer = calculateThis(strOfMath);
+  console.log('answer:', answer);
+ 
   res.sendStatus(201);
+});
+
+ //put the answer in an object 
+//  var ansInObj = {
+//   result: answer
+// }
+
+//GET route
+app.get('/calculate', function(req, res){
+  res.send({return: answer});
 })
 
 
