@@ -1,28 +1,26 @@
 $(document).ready(start);
 
 function start(){
-    //appendBaseStart();
     appendNumberBtns();
-    //addClickHandlers();
+    appendOperatorBtns();
 }
 
 function appendNumberBtns() {
   for(var i = 0; i < 10; i += 1){
       $('#numBtns').append('<button id="num' + i + '">' + i + '</button>');
   }
-
-//   var $opBtns = $('<div class="opBtns"></div>');
-//   $opBtns.append('<button class="operator" id="add">ADD</button>');
-//   $opBtns.append('<button class="operator" id="subtract">SUBTRACT</button>');
-//   $opBtns.append('<button class="operator" id="multiply">MULTIPLY</button>');
-//   $opBtns.append('<button class="operator" id="divide">DIVIDE</button><br>');
-//   $opBtns.append('<button class="operator" id="equals">EQUALS</button><br>');
-//   $opBtns.append('<button id="clear">CLEAR</button>');
-//   //append to the DOM
-//   $('.container').append('<h2 id="display">hey</h2>');
-//   $('.container').append($numBtns);
-//   $('.container').append($opBtns);
 }
+
+function appendOperatorBtns() {
+  $('#opBtns').append('<button class="operator" id="add">ADD</button>');
+  $('#opBtns').append('<button class="operator" id="subtract">SUBTRACT</button>');
+  $('#opBtns').append('<button class="operator" id="multiply">MULTIPLY</button>');
+  $('#opBtns').append('<button class="operator" id="divide">DIVIDE</button><br>');
+  $('#opBtns').append('<button class="operator" id="equals">EQUALS</button><br>');
+  $('#opBtns').append('<button id="clear">CLEAR</button>');
+}
+
+
 
 function addClickHandlers(){
     $numBtns.on('click', 'button', useNumber);
