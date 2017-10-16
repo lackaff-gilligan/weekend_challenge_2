@@ -84,7 +84,7 @@ function addAnswerToDOM(objReturned){
 function getHistory(){
     $.ajax({
         method: 'GET',
-        url: '/history'
+        url: '/calculate/history'
     }).done(function(response){
         console.log('success history!', response);
         appendHistory(response);
