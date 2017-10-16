@@ -2,6 +2,7 @@ $(document).ready(start);
 
 function start(){
     appendNumberBtns();
+    getHistory();
     
     //click handlers
     $('#numBtns').on('click','button', useNumber);
@@ -76,7 +77,19 @@ function addAnswerToDOM(objReturned){
     var currentAns = objReturned.return;
     $('#answer').append(currentAns);
 }
+function getHistory(){
+    $.ajax({
+        method: 'GET',
+        url: '/history'
+    }).done(function(response){
+        console.log('success history!', response);
+        //appendHistory();
+    })
+}
 
+function appendHistory(){
+
+}
 function reset(){
     $('#display').text('');
     $('#answer').text('');

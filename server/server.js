@@ -3,6 +3,7 @@ var app = express();
 var port = 5000;
 //stores the calculations in string form
 var history = []
+
 //will be the current calculation's answer
 var answer;
 // bring in doCalculation.js module
@@ -19,20 +20,17 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //POST route
 app.post('/calculate', function(req, res){
-  //reset answer to 0
-  answer = 0;
   console.log('req.body:', req.body);
   var strMathObj = req.body;
   //just the string of math 
   var strOfMath = strMathObj.problem;
   console.log('strOfMath:', strOfMath);
-  //store the string of math
-  history.push(strOfMath);
-  console.log(history);
   //use the function from doCalculation.js module
   answer = calculateThis(strOfMath);
   console.log('answer:', answer);
- 
+  //store the calculation
+  history.push(strOfMath + ' = ' + answer);
+  console.log('history:', history);
   res.sendStatus(201);
 });
 
@@ -40,6 +38,12 @@ app.post('/calculate', function(req, res){
 app.get('/calculate', function(req, res){
   res.send({return: answer});
 })
+
+app.get('/history', function(req, res){
+  res.send(history);
+})
+  
+
 
 // start up the server
 app.listen(port, function(){
