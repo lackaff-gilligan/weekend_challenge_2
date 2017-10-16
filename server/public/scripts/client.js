@@ -63,6 +63,7 @@ function sendCalculation(){
     })
 }
 
+//make Get request for the answer
 function getAnswer(){
     $.ajax({
         method: 'GET',
@@ -70,6 +71,7 @@ function getAnswer(){
     }).done(function(response){
         console.log('success!');
         addAnswerToDOM(response);
+        getHistory();
     })
 }
 
@@ -77,19 +79,27 @@ function addAnswerToDOM(objReturned){
     var currentAns = objReturned.return;
     $('#answer').append(currentAns);
 }
+
+//make Get request for past calculations
 function getHistory(){
     $.ajax({
         method: 'GET',
         url: '/history'
     }).done(function(response){
         console.log('success history!', response);
-        //appendHistory();
+        appendHistory(response);
     })
 }
 
-function appendHistory(){
-
+function appendHistory(history){
+    //reset from the start to avoid duplicates
+    $('#pastCalculations').empty();
+    console.log('in appendHistory:', history);
+   for (var i = 0; i < history.length; i += 1){
+  $('#pastCalculations').append('<li>' + history[i] + '</li>');
+ }
 }
+
 function reset(){
     $('#display').text('');
     $('#answer').text('');

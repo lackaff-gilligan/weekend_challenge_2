@@ -7,11 +7,16 @@
     <title>Weekend Challenge 2</title>
     <script src="vendors/jquery-3.2.1.min.js"></script>
     <script src="scripts/client.js"></script>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <h1>CALCULATOR APP</h1>
     <div class="container">
-      <div id="dispDiv"><span id="display"></span></div>
+        <h1 id="title">CALCULATOR APP</h1>
+        <h2 id="ansTitle">ANSWER: <span id="answer"></span></h2>
+      <div id="calculator">
+      <div id="dispDiv">
+        <span id="display"></span>
+      </div>
       <div id="numBtns">
 
       </div>
@@ -23,10 +28,11 @@
         <button id="equals">EQUALS</button><br>
         <button id="clear">CLEAR</button>
       </div>
-      <h2>ANSWER: <span id="answer"></span></h2>
-      <h3>History</h3>
+      </div>
+     
+      <h2>History:</h2>
       <ul id="pastCalculations">
-        
+
       </ul>
     </div>
 </body>
